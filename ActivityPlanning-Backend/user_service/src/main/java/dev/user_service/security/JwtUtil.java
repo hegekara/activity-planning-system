@@ -3,7 +3,6 @@ package dev.user_service.security;
 import java.security.Key;
 import java.util.Date;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import dev.user_service.constants.Role;
@@ -25,44 +24,5 @@ public class JwtUtil {
             .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
             .signWith(SECRET_KEY)
             .compact();
-    }
-
-    public String extractUsername(String token) {
-        return Jwts.parserBuilder()
-            .setSigningKey(SECRET_KEY)
-            .build()
-            .parseClaimsJws(token)
-            .getBody()
-            .getSubject();
-    }
-
-    public Role extractRole(String token) {
-        String roleName = Jwts.parserBuilder()
-            .setSigningKey(SECRET_KEY)
-            .build()
-            .parseClaimsJws(token)
-            .getBody()
-            .get("role", String.class);
-
-        return Role.valueOf(roleName);
-    }
-
-    private Date extractExpiration(String token) {
-        return Jwts.parserBuilder()
-            .setSigningKey(SECRET_KEY)
-            .build()
-            .parseClaimsJws(token)
-            .getBody()
-            .getExpiration();
-    }
-
-    protected boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
-    }
-
-    public boolean isValidToken(String token, UserDetails userDetails) {
-        String username = extractUsername(token);
-        Role role = extractRole(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token) && role != null);
     }
 }

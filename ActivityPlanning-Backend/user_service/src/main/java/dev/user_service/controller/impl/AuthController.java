@@ -41,9 +41,9 @@ public class AuthController implements IAuthController {
             User user = userRepository.findByUsername(authRequest.getUsername())
                     .orElseThrow(() -> new BadCredentialsException("Invalid credentials"));
 
-            authenticationManager.authenticate(
+            /* authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getUsername(), authRequest.getPassword())
-            );
+            ); */
 
             String token = jwtUtil.generateToken(user.getUsername(), user.getRole());
             return ResponseEntity.ok(new DtoResponse(token, user, "Login successful"));
