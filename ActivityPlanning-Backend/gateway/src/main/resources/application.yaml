@@ -4,21 +4,18 @@ server:
 spring:
   application:
     name: api-gateway
-  cloud:
-    gateway:
-      routes:
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-              - Path=/users/**
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
+  main:
+    web-application-type : reactive
 
 eureka:
   client:
+    register-with-eureka: true
+    fetch-registry: true
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
