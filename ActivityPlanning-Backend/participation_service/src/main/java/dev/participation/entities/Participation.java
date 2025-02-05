@@ -1,39 +1,33 @@
-package dev.user_service.entities;
+package dev.participation.entities;
 
 import java.util.UUID;
 
-import dev.constants.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
+@Entity
+@Table(name = "particiption",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"userId", "activityId"}))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "User")
-public class User {
+public class Participation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID Id;
-
-    @Column(nullable = false, unique = true)
-    private String username;
+    private UUID id;
 
     @Column(nullable = false)
-    private String password;
+    private UUID userId;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
+    @Column(nullable = false)
+    private UUID activityId;
 }

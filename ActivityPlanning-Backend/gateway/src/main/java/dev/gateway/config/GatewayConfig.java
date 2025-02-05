@@ -18,6 +18,7 @@ public class GatewayConfig {
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
+
                 .route("auth-service", r -> r.path("/auth/**")
                     .uri("lb://USER-SERVICE"))
 
@@ -28,6 +29,11 @@ public class GatewayConfig {
                 .route("activity-service", r -> r.path("/activity/**")
                     .filters(f -> f.filter(jwtAuthenticationFilter))
                     .uri("lb://ACTIVITY-SERVICE"))
+
+                .route("particiption-service", r -> r.path("/participation/**")
+                    .filters(f -> f.filter(jwtAuthenticationFilter))
+                    .uri("lb://PARTICIPATION-SERVICE"))
+
                 .build();
     }
 }

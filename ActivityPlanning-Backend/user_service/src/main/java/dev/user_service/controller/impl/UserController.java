@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.dto.DtoUser;
 import dev.user_service.controller.IUserController;
-import dev.user_service.dto.DtoUser;
 import dev.user_service.service.IUserService;
 
 @RestController

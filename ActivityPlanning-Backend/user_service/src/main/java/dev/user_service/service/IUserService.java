@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
-import dev.user_service.dto.DtoUser;
+import dev.dto.DtoUser;
 
 public interface IUserService {
 
