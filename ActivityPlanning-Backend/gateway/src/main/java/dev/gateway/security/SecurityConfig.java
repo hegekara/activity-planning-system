@@ -10,7 +10,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
-// SecurityConfig.java
 @Configuration
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
