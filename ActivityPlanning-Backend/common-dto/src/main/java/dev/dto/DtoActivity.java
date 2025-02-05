@@ -1,10 +1,10 @@
-package dev.activity.dto;
+package dev.dto;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import dev.activity.constants.Category;
+import dev.constants.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

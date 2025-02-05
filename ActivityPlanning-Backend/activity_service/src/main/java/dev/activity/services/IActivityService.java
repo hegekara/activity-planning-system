@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
-import dev.activity.dto.DtoActivity;
+import dev.dto.DtoActivity;
 
 public interface IActivityService {
 

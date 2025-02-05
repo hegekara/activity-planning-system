@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.activity.controller.IActivityController;
-import dev.activity.dto.DtoActivity;
 import dev.activity.services.IActivityService;
+import dev.dto.DtoActivity;
 
 @RestController
 @RequestMapping("/activity")

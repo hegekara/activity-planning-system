@@ -5,8 +5,7 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
-import dev.user_service.constants.Role;
-
+import dev.constants.Role;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 

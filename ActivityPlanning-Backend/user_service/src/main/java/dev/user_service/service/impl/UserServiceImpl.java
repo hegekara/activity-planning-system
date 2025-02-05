@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import dev.user_service.dto.DtoUser;
+import dev.dto.DtoUser;
 import dev.user_service.entities.User;
 import dev.user_service.repository.IUserRepository;
 import dev.user_service.service.IUserService;

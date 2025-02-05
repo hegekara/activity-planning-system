@@ -1,11 +1,12 @@
-package dev.user_service.dto;
+package dev.dto;
 
 import java.util.UUID;
 
-import dev.user_service.constants.Role;
+import dev.constants.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @Data
 @AllArgsConstructor

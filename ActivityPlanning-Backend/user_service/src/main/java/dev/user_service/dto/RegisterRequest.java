@@ -1,6 +1,6 @@
 package dev.user_service.dto;
 
-import dev.user_service.constants.Role;
+import dev.constants.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

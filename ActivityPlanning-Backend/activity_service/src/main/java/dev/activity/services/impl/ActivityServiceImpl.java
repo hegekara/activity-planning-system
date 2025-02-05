@@ -10,11 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import dev.activity.constants.Category;
-import dev.activity.dto.DtoActivity;
 import dev.activity.entities.Activity;
 import dev.activity.repository.IActivityRepository;
 import dev.activity.services.IActivityService;
+import dev.constants.Category;
+import dev.dto.DtoActivity;
 
 @Service
 public class ActivityServiceImpl implements IActivityService {

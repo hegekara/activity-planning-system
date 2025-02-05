@@ -2,7 +2,7 @@ package dev.user_service.entities;
 
 import java.util.UUID;
 
-import dev.user_service.constants.Role;
+import dev.constants.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
