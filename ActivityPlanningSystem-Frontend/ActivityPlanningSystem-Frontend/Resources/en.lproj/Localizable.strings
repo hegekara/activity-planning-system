@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+  ActivityPlanningSystem-Frontend
+
+  Created by Ege Kara on 13.02.2025.
+  
+*/
+
+
+"AUTH_USERNAME" = "Username";
+
+"AUTH_PASSWORD" = "Password";
+
+"AUTH_PASSWORD_DOUBLE" = "Password x 2";
+
+"AUTH_LOGIN_BUTTON" = "Login";
+
+"AUTH_REGISTER_BUTTON" = "Register";
+
+"AUTH_GOTO_REGISTER_BUTTON" = "Don't you have an account?";
+
+"AUTH_LOGIN_TITLE" = "Login";
+
+"FILL_ALL_FIELDS" = "Please fill all fields";

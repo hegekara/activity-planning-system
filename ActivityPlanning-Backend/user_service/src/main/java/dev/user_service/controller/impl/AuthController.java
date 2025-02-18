@@ -8,6 +8,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import dev.constants.Role;
 import dev.user_service.controller.IAuthController;
 import dev.user_service.dto.DtoResponse;
 import dev.user_service.dto.RegisterRequest;
@@ -36,8 +37,13 @@ public class AuthController implements IAuthController {
             User user = userRepository.findByUsername(authRequest.getUsername())
                     .orElseThrow(() -> new BadCredentialsException("Invalid credentials"));
 
-            String token = jwtUtil.generateToken(user.getUsername(), user.getRole());
-            return ResponseEntity.ok(new DtoResponse(token, user, "Login successful"));
+            if(passwordEncoder.matches(authRequest.getPassword(), user.getPassword())){
+
+                String token = jwtUtil.generateToken(user.getUsername(), user.getRole());
+                return ResponseEntity.ok(new DtoResponse(token, user.getId().toString(), "Login successful"));
+            }
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -60,11 +66,12 @@ public class AuthController implements IAuthController {
             User user = new User();
             BeanUtils.copyProperties(registerRequest, user);
             user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+            user.setRole(Role.ROLE_USER);
 
             userRepository.save(user);
 
             String token = jwtUtil.generateToken(user.getUsername(), user.getRole());
-            return ResponseEntity.ok(new DtoResponse(token, user, "Registration successful"));
+            return ResponseEntity.ok(new DtoResponse(token, user.getId().toString(), "Registration successful"));
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
