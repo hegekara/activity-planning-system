@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class DtoResponse {
 
     private String token;
-    private Object object;
+    private String id;
     private String message = null;
 }

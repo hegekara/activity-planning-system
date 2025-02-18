@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+  ActivityPlanningSystem-Frontend
+
+  Created by Ege Kara on 13.02.2025.
+  
+*/
+
+
+"AUTH_USERNAME" = "Kullanıcı Adı";
+
+"AUTH_PASSWORD" = "Şifre";
+
+"AUTH_PASSWORD_DOUBLE" = "Şifre x 2";
+
+"AUTH_LOGIN_BUTTON" = "Giriş Yap";
+
+"AUTH_REGISTER_BUTTON" = "Kayıt Ol";
+
+"AUTH_GOTO_REGISTER_BUTTON" = "Hesabınız yok mu?";
+
+"AUTH_LOGIN_TITLE" = "Giriş";
+
+"FILL_ALL_FIELDS" = "Lütfen tüm alanları doldurun";
