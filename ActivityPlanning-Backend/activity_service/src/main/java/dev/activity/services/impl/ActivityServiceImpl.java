@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +26,13 @@ public class ActivityServiceImpl implements IActivityService {
     private ModelMapper modelMapper;
 
     @Override
-    public ResponseEntity<DtoActivity> getActivityById(String id) {
+    public ResponseEntity<Activity> getActivityById(String id) {
         
         try {
             Optional<Activity> optional = activityRepository.findById(UUID.fromString(id));
             if(optional.isPresent()){
                 Activity activity = optional.get();
-                return ResponseEntity.ok(modelMapper.map(activity, DtoActivity.class));
+                return ResponseEntity.ok(activity);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
@@ -41,38 +42,49 @@ public class ActivityServiceImpl implements IActivityService {
     }
 
     @Override
-    public ResponseEntity<List<DtoActivity>> getActivitiesByCategory(String category) {
+    public ResponseEntity<List<Activity>> getActivitiesByCategory(String category) {
         try {
             Category activityCategory = Category.valueOf(category.toUpperCase());
             List<Activity> activities = activityRepository.findByCategory(activityCategory);
-            List<DtoActivity> dtoActivities = activities.stream()
-                    .map(activity -> modelMapper.map(activity, DtoActivity.class))
-                    .toList();
-            return ResponseEntity.ok(dtoActivities);
+
+            return ResponseEntity.ok(activities);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @Override
-    public ResponseEntity<List<DtoActivity>> getAllActivities() {
+    public ResponseEntity<List<Activity>> getAllActivities() {
         try {
             List<Activity> activities = activityRepository.findAll();
-            List<DtoActivity> dtoActivities = activities.stream()
-                    .map(activity -> modelMapper.map(activity, DtoActivity.class))
-                    .toList();
-            return ResponseEntity.ok(dtoActivities);
+
+            return ResponseEntity.ok(activities);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @Override
-    public ResponseEntity<DtoActivity> createActvity(DtoActivity dtoActivity) {
+    public ResponseEntity<DtoActivity> createActivity(DtoActivity dtoActivity) {
         try {
-            Activity activity = modelMapper.map(dtoActivity, Activity.class);
+
+            System.out.println("İstek geldi");
+            System.out.println(dtoActivity);
+
+            Activity activity = new Activity();
+
+            BeanUtils.copyProperties(dtoActivity, activity);
+            
+            if (dtoActivity.getActivityDurationEstimate() != null) {
+                activity.setActivityDurationEstimate(dtoActivity.getActivityDurationEstimate());
+            }
+    
             Activity savedActivity = activityRepository.save(activity);
-            return ResponseEntity.ok().body(modelMapper.map(savedActivity, DtoActivity.class));
+
+            DtoActivity responseDto = new DtoActivity();
+            BeanUtils.copyProperties(savedActivity, responseDto);
+            
+            return ResponseEntity.ok().body(responseDto);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

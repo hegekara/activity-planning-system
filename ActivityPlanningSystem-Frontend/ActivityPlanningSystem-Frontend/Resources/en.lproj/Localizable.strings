@@ -22,3 +22,9 @@
 "AUTH_LOGIN_TITLE" = "Login";
 
 "FILL_ALL_FIELDS" = "Please fill all fields";
+
+"HOME_MAP_BUTTON" = "Map";
+
+"HOME_ACTIVITIES_BUTTON" = "Activities";
+
+"HOME_PROFILE_BUTTON" = "Profile";
