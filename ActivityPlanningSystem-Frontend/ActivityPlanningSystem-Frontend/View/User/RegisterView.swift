@@ -102,6 +102,7 @@ struct RegisterView: View {
             }
             .padding(.vertical, 50)
         }
+        .fullScreenCover(isPresented: $isAuth, content: {HomeView()})
     }
 }
 

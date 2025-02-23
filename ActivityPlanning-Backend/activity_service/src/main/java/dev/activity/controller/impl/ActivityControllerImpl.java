@@ -1,5 +1,6 @@
 package dev.activity.controller.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.activity.controller.IActivityController;
+import dev.activity.entities.Activity;
 import dev.activity.services.IActivityService;
+import dev.constants.Category;
 import dev.dto.DtoActivity;
 
 @RestController
@@ -27,26 +30,26 @@ public class ActivityControllerImpl implements IActivityController{
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<DtoActivity> getActivityById(@PathVariable String id) {
+    public ResponseEntity<Activity> getActivityById(@PathVariable String id) {
         return activityService.getActivityById(id);
     }
 
     @Override
     @GetMapping("/category")
-    public ResponseEntity<List<DtoActivity>> getActivitiesByCategory(@RequestParam String categoryName) {
+    public ResponseEntity<List<Activity>> getActivitiesByCategory(@RequestParam String categoryName) {
         return activityService.getActivitiesByCategory(categoryName);
     }
 
     @Override
     @GetMapping("/all")
-    public ResponseEntity<List<DtoActivity>> getAllActivities() {
+    public ResponseEntity<List<Activity>> getAllActivities() {
         return activityService.getAllActivities();
     }
 
     @Override
     @PostMapping("/create")
     public ResponseEntity<DtoActivity> createActvity(@RequestBody DtoActivity dtoActivity) {
-        return activityService.createActvity(dtoActivity);
+        return activityService.createActivity(dtoActivity);
     }
 
     @Override
@@ -59,6 +62,18 @@ public class ActivityControllerImpl implements IActivityController{
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteActivity(@PathVariable String id) {
         return activityService.deleteActivity(id);
+    }
+
+    @Override
+    @GetMapping("/categories")
+    public ResponseEntity<List<Category>> getCategoryList() {
+        return ResponseEntity.ok().body(Arrays.asList(Category.values()));
+    }
+
+    @Override
+    @GetMapping("/control")
+    public ResponseEntity<Void> control() {
+        return ResponseEntity.ok().build();
     }
 
 }

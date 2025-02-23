@@ -22,3 +22,9 @@
 "AUTH_LOGIN_TITLE" = "Giriş";
 
 "FILL_ALL_FIELDS" = "Lütfen tüm alanları doldurun";
+
+"HOME_MAP_BUTTON" = "Harita";
+
+"HOME_ACTIVITIES_BUTTON" = "Aktiviteler";
+
+"HOME_PROFILE_BUTTON" = "Profil";

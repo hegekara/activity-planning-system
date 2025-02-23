@@ -19,16 +19,15 @@ public class GatewayConfig {
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
 
+                .route("activity-service", r -> r.path("/activity/**")
+                    .uri("lb://ACTIVITY-SERVICE"))
+
                 .route("auth-service", r -> r.path("/auth/**")
                     .uri("lb://USER-SERVICE"))
 
                 .route("user-service", r -> r.path("/user/**")
                     .filters(f -> f.filter(jwtAuthenticationFilter))
                     .uri("lb://USER-SERVICE"))
-
-                .route("activity-service", r -> r.path("/activity/**")
-                    .filters(f -> f.filter(jwtAuthenticationFilter))
-                    .uri("lb://ACTIVITY-SERVICE"))
 
                 .route("particiption-service", r -> r.path("/participation/**")
                     .filters(f -> f.filter(jwtAuthenticationFilter))

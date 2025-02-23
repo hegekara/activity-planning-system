@@ -1,6 +1,5 @@
 package dev.activity.entities;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
@@ -46,10 +45,10 @@ public class Activity {
     private LocalTime activityStartingTime;
 
     @Column
-    private Duration activityDurationEstimate;
+    private Long activityDurationEstimate;
 
     @Column(nullable = false)
-    private Double lattitude;
+    private Double latitude;
 
     @Column(nullable = false)
     private Double longitude;

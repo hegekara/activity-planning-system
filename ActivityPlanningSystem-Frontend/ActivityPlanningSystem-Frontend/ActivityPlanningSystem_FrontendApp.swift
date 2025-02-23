@@ -11,7 +11,7 @@ import SwiftUI
 struct ActivityPlanningSystem_FrontendApp: App {
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            HomeView()
         }
     }
 }

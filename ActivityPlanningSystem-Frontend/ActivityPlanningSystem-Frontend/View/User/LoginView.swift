@@ -34,8 +34,10 @@ struct LoginView: View {
                 
                 if let response = response{
                     print(response)
-                    UserDefaults.standard.set(response.token, forKey: "token")
-                    UserDefaults.standard.set(response.id, forKey: "id")
+                    
+                    savePasswordKeychain(username: username, password: password)
+                    saveTokenKeychain(token: response.token)
+                    saveIdKeychain(id: response.id)
                     
                     isAuth = true
                 }
@@ -101,6 +103,7 @@ struct LoginView: View {
         .sheet(isPresented: $isRegisterPresented) {
             RegisterView()
         }
+        .fullScreenCover(isPresented: $isAuth, content: {HomeView()})
     }
 }
 

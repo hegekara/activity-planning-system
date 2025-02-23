@@ -1,6 +1,5 @@
 package dev.dto;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -23,9 +22,9 @@ public class DtoActivity {
 
     private LocalTime activityStartingTime;
 
-    private Duration activityDurationEstimate;
+    private Long activityDurationEstimate;
 
-    private Double lattitude;
+    private Double latitude;
 
     private Double longitude;
 }
