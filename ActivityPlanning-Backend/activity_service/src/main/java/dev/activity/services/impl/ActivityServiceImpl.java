@@ -68,7 +68,6 @@ public class ActivityServiceImpl implements IActivityService {
     public ResponseEntity<DtoActivity> createActivity(DtoActivity dtoActivity) {
         try {
 
-            System.out.println("İstek geldi");
             System.out.println(dtoActivity);
 
             Activity activity = new Activity();

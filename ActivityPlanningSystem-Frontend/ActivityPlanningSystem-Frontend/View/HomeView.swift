@@ -8,17 +8,21 @@
 import SwiftUI
 
 struct HomeView: View {
+    @StateObject private var fetcher = ActivityFetcher()
     var body: some View {
         TabView{
             Tab("HOME_MAP_BUTTON", systemImage: "map"){
-                MapView()
+                MapView(fetcher: fetcher)
             }
             Tab("HOME_ACTIVITIES_BUTTON", systemImage: "figure"){
-                ActivityView()
+                ActivityListView()
             }
             Tab("HOME_PROFILE_BUTTON", systemImage: "person"){
                 ProfileView()
             }
+        }
+        .onAppear(){
+            fetcher.fetchActivities()
         }
     }
 }

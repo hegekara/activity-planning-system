@@ -7,19 +7,19 @@
 
 import Foundation
 
-struct Activity : Codable {
+struct Activity : Codable , Identifiable {
     
-    private let id : String
-    private let activityName : String
-    private let description : String
-    private let category : String
-    private let activityStartingDate : String
-    private let activityStartingTime : String
-    private let activityDurationEstimate : String
-    private let lattitude : Double
-    private let longitude : Double
+    let id : UUID
+    let activityName : String
+    let description : String
+    let category : String
+    let activityStartingDate : String
+    let activityStartingTime : String
+    let activityDurationEstimate : Int32
+    let latitude : Double
+    let longitude : Double
     
-    init(id: String, activityName: String, description: String, category: String, activityStartingDate: String, activityStartingTime: String, activityDurationEstimate: String, lattitude: Double, longitude: Double) {
+    init(id: UUID, activityName: String, description: String, category: String, activityStartingDate: String, activityStartingTime: String, activityDurationEstimate: Int32, latitude: Double, longitude: Double) {
         self.id = id
         self.activityName = activityName
         self.description = description
@@ -27,7 +27,7 @@ struct Activity : Codable {
         self.activityStartingDate = activityStartingDate
         self.activityStartingTime = activityStartingTime
         self.activityDurationEstimate = activityDurationEstimate
-        self.lattitude = lattitude
+        self.latitude = latitude
         self.longitude = longitude
     }
 }
@@ -39,18 +39,18 @@ struct ActivityRequest : Codable {
     private let category : String
     private let activityStartingDate : String
     private let activityStartingTime : String
-    private let activityDurationEstimate : String
-    private let lattitude : Double
+    private let activityDurationEstimate : Int32
+    private let latitude : Double
     private let longitude : Double
     
-    init(activityName: String, description: String, category: String, activityStartingDate: String, activityStartingTime: String, activityDurationEstimate: String, lattitude: Double, longitude: Double) {
+    init(activityName: String, description: String, category: String, activityStartingDate: String, activityStartingTime: String, activityDurationEstimate: Int32, latitude: Double, longitude: Double) {
         self.activityName = activityName
         self.description = description
         self.category = category
         self.activityStartingDate = activityStartingDate
         self.activityStartingTime = activityStartingTime
         self.activityDurationEstimate = activityDurationEstimate
-        self.lattitude = lattitude
+        self.latitude = latitude
         self.longitude = longitude
     }
     
@@ -59,12 +59,12 @@ struct ActivityRequest : Codable {
 struct MarkModel : Codable {
     
     private let id : String
-    private let lattitude : Double
+    private let latitude : Double
     private let longitude : Double
     
     init(id: String, lattitude: Double, longitude: Double) {
         self.id = id
-        self.lattitude = lattitude
+        self.latitude = lattitude
         self.longitude = longitude
     }
     

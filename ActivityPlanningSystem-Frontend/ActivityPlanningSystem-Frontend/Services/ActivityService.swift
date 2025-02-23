@@ -6,42 +6,21 @@
 //
 
 import Foundation
+import Combine
 
 private let baseUrl = "http://localhost:8090/activity"
 
-private func getAllActivities(completion: @escaping (Activity?, Error?) -> Void) {
-    
-    let url = URL(string: "\(baseUrl)/all")
-    
-    let task = URLSession.shared.dataTask(with: url!) {data, response, error in
-        
-        if let data = data{
-            do {
-                let activity = try JSONDecoder().decode(Activity.self, from: data)
-                
-                return completion(activity,nil)
-                
-            } catch {
-                print("JSON decode error : \(error)")
-                return completion(nil, URLError(.badServerResponse))
-            }
-        }
-    }
-    
-    task.resume()
-}
 
-
-private func createActivity(
+func createActivity(
     activityName : String,
     description : String,
     category : String,
     activityStartingDate : String,
     activityStartingTime : String,
-    activityDurationEstimate : String,
-    lattitude : Double,
+    activityDurationEstimate : Int32,
+    latitude : Double,
     longitude : Double,
-    completion: @escaping (Activity?, Error?) -> Void) {
+    completion: @escaping (ActivityRequest?, Error?) -> Void) {
     
     let url = URL(string: "\(baseUrl)/create")
     
@@ -56,9 +35,11 @@ private func createActivity(
         activityStartingDate : activityStartingDate,
         activityStartingTime : activityStartingTime,
         activityDurationEstimate : activityDurationEstimate,
-        lattitude : lattitude,
+        latitude : latitude,
         longitude : longitude
     )
+        
+        print(activityData)
     
     do {
         request.httpBody = try JSONEncoder().encode(activityData)
@@ -67,13 +48,14 @@ private func createActivity(
         return
     }
     
-    let task = URLSession.shared.dataTask(with: url!) {data, response, error in
+        let task = URLSession.shared.dataTask(with: request) {data, response, error in
         
         if let data = data{
             do {
-                let activity = try JSONDecoder().decode(Activity.self, from: data)
                 
-                return completion(activity,nil)
+                let activityResponse = try JSONDecoder().decode(ActivityRequest.self, from: data)
+                
+                return completion(activityResponse,nil)
                 
             } catch {
                 print("JSON decode error : \(error)")
@@ -83,4 +65,97 @@ private func createActivity(
     }
     
     task.resume()
+}
+
+
+
+func getCategories(completion: @escaping ([String]?, Error?) -> Void) {
+    guard let url = URL(string: "\(baseUrl)/categories") else {
+        completion(nil, URLError(.badURL))
+        return
+    }
+    
+    
+    let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        if let error = error {
+            completion(nil, error)
+            return
+        }
+        
+        guard let data = data else {
+            completion(nil, URLError(.badServerResponse))
+            return
+        }
+        
+        do {
+            let categories = try JSONDecoder().decode([String].self, from: data)
+            completion(categories, nil)
+        } catch {
+            print("JSON decode error: \(error)")
+            completion(nil, error)
+        }
+    }
+    
+    task.resume()
+}
+
+
+func getActivities(completion: @escaping ([Activity]?, Error?) -> Void) {
+    guard let url = URL(string: "\(baseUrl)/all") else {
+        completion(nil, URLError(.badURL))
+        return
+    }
+    
+    
+    let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        if let error = error {
+            completion(nil, error)
+            return
+        }
+        
+        guard let data = data else {
+            completion(nil, URLError(.badServerResponse))
+            return
+        }
+        
+        do {
+            let activities = try JSONDecoder().decode([Activity].self, from: data)
+            completion(activities, nil)
+        } catch {
+            print("JSON decode error: \(error)")
+            completion(nil, error)
+        }
+    }
+    
+    task.resume()
+}
+
+
+class ActivityFetcher : ObservableObject {
+    @Published var data : [Activity] = []
+    @Published var isLoading : Bool = false
+    
+    func fetchActivities(){
+        guard !isLoading else {return}
+        isLoading = true
+        
+        getActivities{ response, error in
+            
+            DispatchQueue.main.async {
+                if let error = error {
+                    print("Error while fetching activities : \(error)")
+                    return
+                }
+                
+                if let response = response {
+                    self.data = response
+                    
+                    if self.data.isEmpty{
+                        print("Activity list is empty")
+                    }
+                    return
+                }
+            }
+        }
+    }
 }
