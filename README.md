@@ -18,7 +18,7 @@ API güvenliğinin sağlanması için JSON Web Token (JWT) kullanılmıştır. K
 
 Proje'nin backend kısmında kullanılan mikroservis mimarisi şu şekilde işlemektedir.
 
-![ER Diagram](https://github.com/user-attachments/assets/f46ccc5b-605b-4cfc-b0d6-0a92d0bb4419)
+![ER Diagram](https://github.com/user-attachments/assets/87037fd8-0fe5-458c-8f46-b31919d0f275)
 
 
 Servisler, Controller-Service-Repository katmanları ile katmanlı bir mimari kullanılarak oluşturulmuştur.
@@ -31,7 +31,7 @@ Servisler, Controller-Service-Repository katmanları ile katmanlı bir mimari ku
 
 Veri tabanı yönetim sistemi olarak ise PostgreSql kullanılmıştır. Aşağıdaki ER diyagramı, uygulamada kullanılan veri modelini detaylandırmaktadır.
 
-![ER Diagram](https://github.com/user-attachments/assets/d22321de-6964-4d83-8dbc-c868c1ae095c)
+![ER Diagram](https://github.com/user-attachments/assets/6050fb8b-6944-471a-b7a0-5bf24605cdaf)
 
 
 
