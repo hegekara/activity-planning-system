@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.dto.DtoUser;
 import dev.user_service.controller.IUserController;
+import dev.user_service.dto.PasswordRequest;
 import dev.user_service.service.IUserService;
+
 
 @RestController
 @RequestMapping("/user")
@@ -43,8 +44,22 @@ public class UserController implements IUserController{
     }
 
     @Override
-    @PatchMapping("/{id}")
-    public ResponseEntity<Void> changePassword(@PathVariable String id,@RequestParam String oldPassword,@RequestParam String newPassword) {
-        return userService.changePassword(id, oldPassword, newPassword);
+    @PatchMapping("/change-password/{id}")
+    public ResponseEntity<Void> changePassword(@PathVariable String id, @RequestBody PasswordRequest passwordRequest) {
+
+        System.out.println(passwordRequest);
+
+        return userService.changePassword(id, passwordRequest.getOldPassword(), passwordRequest.getNewPassword());
     }
+
+    @GetMapping("/test/{id}")
+    public ResponseEntity<Void> test(@PathVariable String id, @RequestBody PasswordRequest passwordRequest) {
+
+        System.out.println(id);
+        System.out.println(passwordRequest);
+
+        return ResponseEntity.ok().build();
+
+    }
+    
 }

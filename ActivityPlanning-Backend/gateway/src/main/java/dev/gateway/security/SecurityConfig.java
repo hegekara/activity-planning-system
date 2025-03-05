@@ -22,7 +22,7 @@ public class SecurityConfig {
             .headers(headers -> headers.frameOptions(frame -> frame.disable()))
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeExchange(exchange -> exchange
-                .pathMatchers("/auth/**","/activity/**").permitAll()
+                .pathMatchers("/auth/**","/activity/**", "/user/**", "/participation/**").permitAll()
                 .anyExchange().authenticated()
             )
             .build();

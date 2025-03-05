@@ -15,10 +15,10 @@ struct HomeView: View {
                 MapView(fetcher: fetcher)
             }
             Tab("HOME_ACTIVITIES_BUTTON", systemImage: "figure"){
-                ActivityListView()
+                ActivityListView(activities: fetcher.data)
             }
-            Tab("HOME_PROFILE_BUTTON", systemImage: "person"){
-                ProfileView()
+            Tab("HOME_SETTING_BUTTON", systemImage: "gear"){
+                SettingsView()
             }
         }
         .onAppear(){

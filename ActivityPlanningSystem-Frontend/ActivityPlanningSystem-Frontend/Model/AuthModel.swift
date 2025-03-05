@@ -18,3 +18,8 @@ struct AuthResponse: Codable {
     let token : String
     let message : String
 }
+
+struct PasswordRequest: Codable {
+    let oldPassword : String
+    let newPassword : String
+}

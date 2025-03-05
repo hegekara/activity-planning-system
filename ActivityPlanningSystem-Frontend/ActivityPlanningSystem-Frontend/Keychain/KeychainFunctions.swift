@@ -54,7 +54,7 @@ func saveTokenKeychain(token : String) {
 
 //  Save id to keychain
 func saveIdKeychain(id : String) {
-    saveToKeychain(key: "Id", value: id)
+    saveToKeychain(key: "id", value: id)
 }
 
 
@@ -79,6 +79,23 @@ func getFromKeychain(key : String) -> String? {
     }else{
         print("\(key) bulunamadı. error: \(status)")
         return nil
+    }
+}
+
+
+
+func clearKeychain() {
+    let query: [String: Any] = [
+        kSecClass as String: kSecClassGenericPassword,
+        kSecAttrService as String: serviceName
+    ]
+    
+    let status = SecItemDelete(query as CFDictionary)
+    
+    if status == errSecSuccess {
+        print("Keychain başarıyla temizlendi.")
+    } else {
+        print("Keychain temizleme hatası: \(status)")
     }
 }
 

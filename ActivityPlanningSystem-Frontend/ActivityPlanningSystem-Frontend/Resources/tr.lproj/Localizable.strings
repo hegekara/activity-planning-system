@@ -28,3 +28,13 @@
 "HOME_ACTIVITIES_BUTTON" = "Aktiviteler";
 
 "HOME_PROFILE_BUTTON" = "Profil";
+
+"PASSWORD_CHANGE_OLD_PASSWORD" = "Eski Şifre";
+
+"PASSWORD_CHANGE_NEW_PASSWORD" = "Yeni Şifre";
+
+"PASSWORD_CHANGE_NEW_PASSWORD_CHECK" = "Yeni Şifre Doğrula";
+
+"PASSWORD_CHANGE_SUBMIT_BUTTON" = "Değiştir";
+
+"PASSWORD_CHANGE_SCREEN" = "Şifre Değiştirme";

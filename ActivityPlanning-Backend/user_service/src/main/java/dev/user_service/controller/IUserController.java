@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import dev.dto.DtoUser;
+import dev.user_service.dto.PasswordRequest;
 
 public interface IUserController {
 
@@ -14,6 +15,6 @@ public interface IUserController {
 
     public ResponseEntity<DtoUser> updateUser(DtoUser dtoUser);
 
-    public ResponseEntity<Void> changePassword(String id, String oldPassword, String newPassword);
+    public ResponseEntity<Void> changePassword(String id, PasswordRequest passwordRequest);
 
 }

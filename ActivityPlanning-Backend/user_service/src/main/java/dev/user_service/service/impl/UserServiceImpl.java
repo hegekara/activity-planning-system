@@ -104,7 +104,9 @@ public class UserServiceImpl implements IUserService{
 
                 if (passwordEncoder.matches(oldPassword, user.getPassword())) {
                     user.setPassword(newPassword);
+                    System.out.println("şifre değişti : " +newPassword);
                     userRepository.save(user);
+                    System.out.println("kullanıcı kaydedildi" + user);
                     return ResponseEntity.ok().build();
                 }
 

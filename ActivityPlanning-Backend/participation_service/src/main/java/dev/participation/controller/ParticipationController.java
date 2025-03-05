@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.dto.DtoActivity;
 import dev.participation.entities.Participation;
 import dev.participation.service.ParticipationService;
 
@@ -22,29 +22,36 @@ public class ParticipationController {
 
     @Autowired
     private ParticipationService participationService;
+    
+
+    @GetMapping("/check-user-participation")
+    public ResponseEntity<Void> checkUserParticipation(@RequestHeader String userId, @RequestHeader String activityId) {
+        return participationService.checkUserParticipation(UUID.fromString(userId), UUID.fromString(activityId));
+    }
+    
 
     @PostMapping("/register")
     public ResponseEntity<Participation> registerUserToActivity(
-            @RequestParam UUID userId, 
-            @RequestParam UUID activityId) {
-        return participationService.registerUserToActivity(userId, activityId);
+            @RequestHeader String userId, 
+            @RequestHeader String activityId) {
+        return participationService.registerUserToActivity(UUID.fromString(userId), UUID.fromString(activityId));
     }
 
-    @GetMapping("/activity/{activityId}")
-    public ResponseEntity<List<Participation>> getParticipantsByActivity(@PathVariable UUID activityId) {
-        return participationService.getParticipantsByActivity(activityId);
+    @GetMapping("/activity")
+    public ResponseEntity<List<Participation>> getParticipantsByActivity(@RequestHeader String activityId) {
+        return participationService.getParticipantsByActivity(UUID.fromString(activityId));
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Participation>> getUserActivities(@PathVariable UUID userId) {
-        return participationService.getUserActivities(userId);
+    @GetMapping("/user")
+    public ResponseEntity<List<DtoActivity>> getUserActivities(@RequestHeader String userId) {
+        return participationService.getUserActivities(UUID.fromString(userId));
     }
 
-    @DeleteMapping("/remove")
+    @DeleteMapping("/unregister")
     public ResponseEntity<Void> deleteParticipation(
-            @RequestParam UUID userId, 
-            @RequestParam UUID activityId) {
-        return participationService.deleteParticipation(userId, activityId);
+            @RequestHeader String userId, 
+            @RequestHeader String activityId) {
+        return participationService.deleteParticipation(UUID.fromString(userId), UUID.fromString(activityId));
     }
 
 }

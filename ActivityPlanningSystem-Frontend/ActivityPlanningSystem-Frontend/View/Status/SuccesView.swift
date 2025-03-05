@@ -17,11 +17,11 @@ struct SuccesView: View {
                 .foregroundStyle(.green)
                 .padding()
                 
-            Text("Procces successfully completed")
+            Text("SUCCESSFULL_TEXT")
                 .fontWeight(.semibold)
                 .font(.title)
-            
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

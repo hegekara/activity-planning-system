@@ -7,11 +7,12 @@
 
 import Foundation
 
-private let baseUrl: String = "http://localhost:8090/auth"
+private let baseAuthUrl: String = "http://localhost:8090/auth"
+private let baseUserUrl: String = "http://localhost:8090/user"
 
 private func performAuthRequest(endpoint: String, username: String, password: String, completion: @escaping (AuthResponse?, Error?) -> Void) {
     
-    let urlString = "\(baseUrl)\(endpoint)"
+    let urlString = "\(baseAuthUrl)\(endpoint)"
     
     guard let url = URL(string: urlString) else {
         completion(nil, URLError(.badURL))
@@ -58,8 +59,49 @@ private func performAuthRequest(endpoint: String, username: String, password: St
 
 func login(username: String, password: String, completion: @escaping (AuthResponse?, Error?) -> Void) {
     performAuthRequest(endpoint: "/login", username: username, password: password, completion: completion)
+    print("Login isteği atıldı")
 }
 
 func register(username: String, password: String, completion: @escaping (AuthResponse?, Error?) -> Void) {
     performAuthRequest(endpoint: "/register", username: username, password: password, completion: completion)
+}
+
+
+func changePassword(id : String, oldPassword: String, newPassword: String, completion: @escaping (Error?) -> Void) {
+    
+    let urlString = "\(baseUserUrl)/change-password/\(id)"
+    
+    guard let url = URL(string: urlString) else{
+        completion(URLError(.badURL))
+        return
+    }
+    
+    var request = URLRequest(url: url)
+    request.httpMethod = "PATCH"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    
+    let passwordData = PasswordRequest(oldPassword: oldPassword, newPassword: newPassword)
+    
+    do{
+        request.httpBody = try JSONEncoder().encode(passwordData)
+    }catch{
+        completion(error)
+        return
+    }
+    
+    let task = URLSession.shared.dataTask(with: request) { _, response, error in
+        if let error = error {
+            completion(error)
+            return
+        }
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            completion(URLError(.badServerResponse))
+            return
+        }
+        
+        completion(nil)
+    }
+    
+    task.resume()
 }
