@@ -27,4 +27,62 @@
 
 "HOME_ACTIVITIES_BUTTON" = "Activities";
 
-"HOME_PROFILE_BUTTON" = "Profile";
+"HOME_SETTING_BUTTON" = "Settings";
+
+"PASSWORD_CHANGE_OLD_PASSWORD" = "Old Password";
+
+"PASSWORD_CHANGE_NEW_PASSWORD" = "New Password";
+
+"PASSWORD_CHANGE_NEW_PASSWORD_CHECK" = "Confirm New Password";
+
+"PASSWORD_CHANGE_SUBMIT_BUTTON" = "Change";
+
+"PASSWORD_CHANGE_SCREEN" = "Change Password";
+
+"SETTINGS_SCREEN_TITLE" = "Settings";
+
+"SETTINGS_MYACTIVITIES_BUTTON" = "My Activities";
+
+"SETTINGS_CHANGE_PASSWORD_BUTTON" = "Change Password";
+
+"PARTICIPATE_REGISTER_BUTTON" = "Register to Activity";
+
+"PARTICIPATE_UNREGISTER_BUTTON" = "Unregister to Activity";
+
+"ACTIVITY_CATEGORY" = "Category";
+
+"ACTIVITY_CATEGORY_ALL" = "All";
+
+"ACTIVITY_TITLE" = "Activities";
+
+"USER_ID_NOT_FOUND" = "User could not be found";
+
+"ACTIVITY_CREATE_INFO" = "Activity Info";
+
+"ACTIVITY_CREATE_NAME" = "Name";
+
+"ACTIVITY_CREATE_DESCRIPTION" = "Description";
+
+"ACTIVITY_CREATE_CATEGORY" = "Category";
+
+"ACTIVITY_CREATE_LOADING" = "Loading";
+
+"ACTIVITY_CREATE_TIME_DETAIL" = "Time Detail";
+
+"ACTIVITY_CREATE_STARTING_DATE" = "Staring Date";
+
+"ACTIVITY_CREATE_STARTING_TIME" = "Starting Time";
+
+"ACTIVITY_CREATE_ESTIMATED_TIME" = "Estimated Time";
+
+"ACTIVITY_CREATE_CHOOSE_LOCATION" = "Choose location";
+
+"ACTIVITY_CREATE_CHOOSEN_LOCATION" = "Choosen location";
+
+"ACTIVITY_CREATE_SUBMIT" = "Create";
+
+"SUCCESSFULL_TEXT" = "Proccess completed successfully";
+
+"SETTINGS_LOGOUT_BUTTON" = "Log out";
+
+"ACTIVITY_CREATE_TITLE" = "Create Activity";

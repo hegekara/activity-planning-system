@@ -29,7 +29,7 @@ struct RegisterView: View {
             register(username: username, password: password) { response, error in
                 DispatchQueue.main.async {
                     if let error = error {
-                        errorMessage = "Register failed: \(error.localizedDescription)"
+                        errorMessage = "Register failed: \(error)"
                         return
                     }
                     

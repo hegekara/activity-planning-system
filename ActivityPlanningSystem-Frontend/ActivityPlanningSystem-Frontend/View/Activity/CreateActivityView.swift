@@ -14,7 +14,7 @@ struct CreateActivityView: View {
     @State private var category: String = ""
     @State private var activityStartingDate: Date = Date()
     @State private var activityStartingTime: Date = Date()
-    @State private var activityDurationEstimate: Int32 = 0
+    @State private var activityDurationEstimate: Date = Calendar.current.startOfDay(for: Date())
     @State private var latitude: Double = 0.0
     @State private var longitude: Double = 0.0
     @State private var selectedCoordinate: CLLocationCoordinate2D? = nil
@@ -28,13 +28,13 @@ struct CreateActivityView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("Etkinlik Bilgileri")) {
-                    TextField("Etkinlik Adı", text: $activityName)
-                    TextField("Açıklama", text: $description)
-                    Picker("Kategori", selection: $category) {
+                Section(header: Text("ACTIVITY_CREATE_INFO")) {
+                    TextField("ACTIVITY_CREATE_NAME", text: $activityName)
+                    TextField("ACTIVITY_CREATE_DESCRIPTION", text: $description)
+                    Picker("ACTIVITY_CREATE_CATEGORY", selection: $category) {
 
                         if categoryList.isEmpty {
-                            Text("Yükleniyor...").tag("")
+                            Text("ACTIVITY_CREATE_LOADING").tag("")
                         } else {
                             ForEach(categoryList, id: \.self) { category in
                                 Text(category).tag(category)
@@ -43,24 +43,17 @@ struct CreateActivityView: View {
                     }
                 }
                 
-                Section(header: Text("Zaman Bilgileri")) {
-                    DatePicker("Başlangıç Tarihi", selection: $activityStartingDate, displayedComponents: .date)
-                    DatePicker("Başlangıç Saati", selection: $activityStartingTime, displayedComponents: .hourAndMinute)
-                    TextField("Tahmini Süre (saat)", text: Binding(
-                        get: { String(activityDurationEstimate) },
-                        set: { newValue in
-                            if let value = Int32(newValue) {
-                                activityDurationEstimate = value
-                            }
-                        }
-                    ))
+                Section(header: Text("ACTIVITY_CREATE_TIME_DETAIL")) {
+                    DatePicker("ACTIVITY_CREATE_STARTING_DATE", selection: $activityStartingDate, displayedComponents: .date)
+                    DatePicker("ACTIVITY_CREATE_STARTING_TIME", selection: $activityStartingTime, displayedComponents: .hourAndMinute)
+                    DatePicker("ACTIVITY_CREATE_ESTIMATED_TIME", selection: $activityDurationEstimate, displayedComponents: .hourAndMinute)
                 }
                 
-                Section(header: Text("Konum Seçimi")) {
+                Section(header: Text("ACTIVITY_CREATE_CHOOSE_LOCATION")) {
                     MapReader { proxy in
                         Map(position: $position){
                             if let coordinate = selectedCoordinate {
-                                Marker("Seçilen Konum", coordinate: coordinate)
+                                Marker("ACTIVITY_CREATE_CHOOSEN_LOCATION", coordinate: coordinate)
                             }
                         }
                             .mapStyle(.standard(pointsOfInterest: .excludingAll))
@@ -80,7 +73,7 @@ struct CreateActivityView: View {
                     }
                     
                     if let coordinate = selectedCoordinate {
-                        Text("Seçilen Konum: \(coordinate.latitude), \(coordinate.longitude)")
+                        Text("ACTIVITY_CREATE_CHOOSEN_LOCATION: \(coordinate.latitude), \(coordinate.longitude)")
                             .font(.footnote)
                             .foregroundColor(.gray)
                     }
@@ -88,7 +81,7 @@ struct CreateActivityView: View {
                 
                 Section {
                     Button(action: submitForm) {
-                        Text("Gönder")
+                        Text("ACTIVITY_CREATE_SUBMIT")
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(Color.blue)
@@ -97,7 +90,7 @@ struct CreateActivityView: View {
                     }
                 }
             }
-            .navigationTitle("Etkinlik Oluştur")
+            .navigationTitle("ACTIVITY_CREATE_TITLE")
             .onAppear() {
                 fetchCategories()
             }
@@ -123,6 +116,21 @@ struct CreateActivityView: View {
         }
     }
     
+    func minuteConverter(date: Date) -> Int32 {
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH:mm"
+        
+        let formattedTime = timeFormatter.string(from: date)
+        let components = formattedTime.components(separatedBy: ":")
+        
+        guard let hours = Int32(components[0]), let minutes = Int32(components[1]) else {
+            return 0
+        }
+        
+        return (hours*60)+minutes
+    }
+    
+    
     func submitForm() {
         
         let dateFormatter = DateFormatter()
@@ -138,7 +146,7 @@ struct CreateActivityView: View {
             longitude = coordinate.longitude
         }
         
-        createActivity(activityName: activityName, description: description, category: category, activityStartingDate: formattedDate, activityStartingTime: formattedTime, activityDurationEstimate: activityDurationEstimate, latitude: latitude, longitude: longitude) { response, error in
+        createActivity(activityName: activityName, description: description, category: category, activityStartingDate: formattedDate, activityStartingTime: formattedTime, activityDurationEstimate: minuteConverter(date: activityDurationEstimate), latitude: latitude, longitude: longitude) { response, error in
             
             DispatchQueue.main.async {
                 if let error = error {
@@ -148,6 +156,7 @@ struct CreateActivityView: View {
                 
                 if let response = response{
                     isCreateSuccess = true
+                    
                     print(response)
                 }
             }

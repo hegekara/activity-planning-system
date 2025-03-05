@@ -65,11 +65,14 @@ struct MapView: View {
                 }
             }
             .navigationBarHidden(true)
+            .onAppear(){
+                fetcher.fetchActivities()
+            }
         }
     }
 }
 
 #Preview {
-    var fetcher = ActivityFetcher()
+    let fetcher = ActivityFetcher()
     MapView(fetcher: fetcher)
 }

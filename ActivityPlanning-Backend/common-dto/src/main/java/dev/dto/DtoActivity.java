@@ -2,6 +2,7 @@ package dev.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 import dev.constants.Category;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DtoActivity {
+
+    private UUID id;
+
     private String activityName;
 
     private String description;

@@ -1,5 +1,6 @@
 package dev.participation.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -9,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import dev.dto.DtoActivity;
 import dev.participation.entities.Participation;
+import dev.participation.feigns.IActivityServiceClient;
 import dev.participation.repository.IParticipationRepository;
 
 @Service
@@ -17,6 +20,24 @@ public class ParticipationService {
 
     @Autowired
     private IParticipationRepository participationRepository;
+
+    @Autowired
+    private IActivityServiceClient activityServiceClient;
+
+    public ResponseEntity<Void> checkUserParticipation(UUID userId, UUID activityId){
+        try {
+            boolean exists = participationRepository.existsByUserIdAndActivityId(userId, activityId);
+
+            if (exists) {
+                return ResponseEntity.ok().build();
+            }
+
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
     public ResponseEntity<Participation> registerUserToActivity(UUID userId, UUID activityId) {
         try {
@@ -44,9 +65,14 @@ public class ParticipationService {
         }
     }
 
-    public ResponseEntity<List<Participation>> getUserActivities(UUID userId) {
+    public ResponseEntity<List<DtoActivity>> getUserActivities(UUID userId) {
         try {
-            List<Participation> activities = participationRepository.findByUserId(userId);
+            List<Participation> participationList = participationRepository.findByUserId(userId);
+            List<DtoActivity> activities = new ArrayList<>();
+            for (Participation participation : participationList) {
+                DtoActivity activity = activityServiceClient.getActivityById(participation.getActivityId()).getBody();
+                activities.add(activity);
+            }
             return ResponseEntity.ok(activities);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
